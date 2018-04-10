@@ -39,6 +39,7 @@ public class ProductService {
 	public List<Product> getProducts() {
 		return dao.getProducts();
 	}
+
 	
 	@Scheduled(cron = "${product.status.schedule}")
     public void productStatus() {
