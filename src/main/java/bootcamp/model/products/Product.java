@@ -18,8 +18,8 @@ public class Product {
 	private int id;
 	private String name;
 	private String description;
-	private BigDecimal wholesale_price;
-	private BigDecimal retail_price;
+	private double wholesale_price;
+	private double retail_price;
 	
     
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -46,16 +46,16 @@ public class Product {
 		this.description = description;
 	}
 	
-	public BigDecimal getWholesale_price() {
+	public double getWholesale_price() {
 		return wholesale_price;
 	}
-	public void setWholesale_price(BigDecimal wholesale_price) {
+	public void setWholesale_price(double wholesale_price) {
 		this.wholesale_price = wholesale_price;
 	}
-	public BigDecimal getRetail_price() {
+	public double getRetail_price() {
 		return retail_price;
 	}
-	public void setRetail_price(BigDecimal retail_price) {
+	public void setRetail_price(double retail_price) {
 		this.retail_price = retail_price;
 	}
 	

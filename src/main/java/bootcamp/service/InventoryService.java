@@ -29,14 +29,20 @@ public class InventoryService {
 	 @Autowired
 	 private SimpleDateFormat dateFormat;
 	
-	public void receiveInventory(List<Product> products) {
-		inventoryList.addAll(products);
-	}
+//	public void receiveInventory(List<Product> products) {
+//		inventoryList.addAll(products);
+//	}
 
 	public List<InventoryItem> getInventory(){
 		return dao.getInventory();
 	}
-	
+
+	public List<InventoryItem> getInventoryById(Integer id){
+		return dao.getInventory();
+	}
+	public void addToInventory(int productID, int quantity, double wholeSalePrice){
+		dao.addToInventory(productID, quantity, wholeSalePrice);
+	}
 	@Scheduled(cron = "${inventory.status.schedule}")
     public void inventoryStatus() {
         log.info("Checking on inventory status at {}", dateFormat.format(new Date()));

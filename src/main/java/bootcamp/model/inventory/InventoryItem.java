@@ -6,13 +6,20 @@ import java.math.BigDecimal;
 
 public class InventoryItem {
     private int number_available;
-    private BigDecimal wholesale_price;
+    private BigDecimal retail_price;
     private int id;
 
 
     public InventoryItem(){
 
     }
+
+    public InventoryItem(int number_available, BigDecimal retail_price, int id) {
+        this.number_available = number_available;
+        this.retail_price = retail_price;
+        this.id = id;
+    }
+
 
     public int getNumber_available() {
         return number_available;
@@ -22,12 +29,12 @@ public class InventoryItem {
         this.number_available = number_available;
     }
 
-    public BigDecimal getWholesale_price() {
-        return wholesale_price;
+    public BigDecimal getRetail_price() {
+        return retail_price;
     }
 
-    public void setWholesale_price(BigDecimal wholesale_price) {
-        this.wholesale_price = wholesale_price;
+    public void setRetail_price(BigDecimal retail_price) {
+        this.retail_price = retail_price;
     }
 
     public int getId() {
@@ -35,12 +42,6 @@ public class InventoryItem {
     }
 
     public void setId(int id) {
-        this.id = id;
-    }
-
-    public InventoryItem(int number_available, BigDecimal wholesale_price, int id) {
-        this.number_available = number_available;
-        this.wholesale_price = wholesale_price;
         this.id = id;
     }
 }

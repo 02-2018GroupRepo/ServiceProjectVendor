@@ -2,7 +2,7 @@ package bootcamp.model.order;
 
 public class Order {
    private int id;
-    private int number_available;
+   private int number_available;
 
 
     public Order(){
@@ -28,5 +28,10 @@ public class Order {
     public Order(int id, int number_available) {
         this.id = id;
         this.number_available = number_available;
+    }
+
+
+    public Order(int id) {
+        this.id = id;
     }
 }

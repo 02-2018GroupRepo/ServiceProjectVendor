@@ -1,5 +1,6 @@
 package bootcamp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bootcamp.model.inventory.InventoryItem;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 import bootcamp.model.products.Product;
 import bootcamp.service.InventoryService;
 import bootcamp.model.inventory.Inventory;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class InventoryController {
 	@Autowired
 	private InventoryService inventoryService;
+	@Autowired
+    private RestTemplate restTemplate;
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -28,19 +32,19 @@ public class InventoryController {
 		return inventoryService.getInventory();
 	}
 
-//	@RequestMapping("order/lowItem")
-//	public List<InventoryItem> getAllLowItem(){
-//		return inventoryService.getInventory();
-//	}
+
+	public void getSupplierInventory(String url){
+        ArrayList<Inventory> supplierInventory = restTemplate.getForObject(url, ArrayList.class);
+    }
 
 	@RequestMapping("/test")
 	public String getInventory(){
 		return "testing";
 	}
-	@RequestMapping(name = "inventory/receive", method=RequestMethod.POST)
-    public void getProduct(@RequestBody List<Product> products) {
-		log.debug("Receiving products");
-    	inventoryService.receiveInventory(products);
-    }
+//	@RequestMapping(name = "inventory/receive", method=RequestMethod.POST)
+//    public void getProduct(@RequestBody List<Product> products) {
+//		log.debug("Receiving products");
+//    	inventoryService.receiveInventory(products);
+//    }
 	
 }

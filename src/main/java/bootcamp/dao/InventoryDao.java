@@ -19,7 +19,7 @@ public class InventoryDao {
 
     private final String GET_LOW_PRODUCTS = "SELECT id, number_available from Inventory where number_available < 10";
 
-   // private final String GET_PRODUCTS = "SELECT id, number_available from Inventory where number_available < 10";
+
     private final String GET_PRODUCT_BY_ID_SQL = GET_PRODUCTS + " where id = ?";
 
     @Autowired
@@ -49,7 +49,17 @@ public class InventoryDao {
     public List<String> getListOfThings() {
         return listOfThings;
     }
+
+    public void addToInventory(int productID, int quantity, double wholeSalePrice){
+
+        String updating_wholesale_price= "UPDATE product SET wholesale_price = " + wholeSalePrice + ", retail_price = " + wholeSalePrice + " * 1.50 WHERE id = " + productID;
+        String updating_quantity = "UPDATE inventory SET number_available = number_available +" + quantity + " WHERE id = " + productID;
+
+       jdbcTemplate.update(updating_wholesale_price);
+       jdbcTemplate.update(updating_quantity);
+    }
 //
+
 //    public List<InventoryItem> getListOfInventory() {
 //        return items;
 //    }
