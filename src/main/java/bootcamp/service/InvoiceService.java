@@ -1,48 +1,62 @@
 package bootcamp.service;
 
-import bootcamp.model.invoice.Payment;
+import bootcamp.model.company.Company;
+import bootcamp.model.invoice.Invoice;
+import bootcamp.model.order.Order;
+import bootcamp.model.payment.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
+
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
 @Component
 public class InvoiceService {
+    @Autowired
+    Company company;
 
     @Autowired
-    RestTemplate restTemplate;
+    InventoryService inventoryService;
 
-    @Value("${supplier-a.url}")
-    String supplier_a_url;
+    @Autowired
+    ProductService productService;
 
-    @Value("${supplier-b.url}")
-    String supplier_b_url;
+    private Map<Integer, Invoice> invoiceMap = new HashMap<>();
+    private int counter = 20;
 
-    @Value("${supplier-c.url}")
-    String supplier_c_url;
+    public Invoice getInvoiceByInvoiceId(int invoiceId) {
+        return this.invoiceMap.get(invoiceId);
+    }
 
-    public boolean makePayment(int supplier, double total){
+    public Boolean checkMapbyInvoiceId(int invoiceId){
+        return invoiceMap.containsKey(invoiceId);
+    }
 
-        UriComponentsBuilder builder;
-        boolean paymentComplete = false;
+    public Invoice createInvoice(Order order) {
+        Invoice invoice = new Invoice(counter++, productService.getProductById(order.getId()), order.getQuantity());
+        addInvoiceToInvoiceMap(invoice);
+        return invoice;
+    }
 
-        Payment payment = new Payment(total);
-        switch(supplier){
-            case 1:
-                builder = UriComponentsBuilder.fromUriString("http://" + supplier_a_url + "/payment").port(8080);
-                paymentComplete = restTemplate.postForObject(builder.toUriString(), payment, Boolean.class);
-                break;
-            case 2:
-                builder = UriComponentsBuilder.fromUriString("http://" + supplier_b_url + "/payment").port(8080);
-                paymentComplete = restTemplate.postForObject(builder.toUriString(), payment, Boolean.class);
-                break;
-            case 3:
-                builder = UriComponentsBuilder.fromUriString("http://" + supplier_c_url + "/payment").port(8080);
-                paymentComplete = restTemplate.postForObject(builder.toUriString(), payment, Boolean.class);
-                break;
-            default:
-                break;
+    public void addInvoiceToInvoiceMap(Invoice invoice) {
+        this.invoiceMap.put(invoice.getInvoiceId(), invoice);
+    }
+
+    public Boolean verifyPaymentWithInvoice(Payment payment) {
+//        BigDecimal retail_price = getInvoiceByInvoiceId(payment.getInvoiceId()).getProduct().getRetail_price();
+//        BigDecimal count = BigDecimal.valueOf(getInvoiceByInvoiceId(payment.getInvoiceId()).getCount());
+        if (checkMapbyInvoiceId(payment.getInvoiceId())) {
+            // Add cash to our company
+            company.addCash(payment.getPaymentForProduct().setScale(2, BigDecimal.ROUND_DOWN).doubleValue());
+
+            // Get invoice and use it to modify inventory, and check for restock
+            Invoice invoice = getInvoiceByInvoiceId(payment.getInvoiceId());
+            inventoryService.removeFromInventory(invoice.getProduct().getId(), invoice.getCount());
+            inventoryService.checkInventoryForRestock();
+            return new Boolean(true);
+        } else {
+            return new Boolean(false);
         }
-        return paymentComplete;
     }
 }

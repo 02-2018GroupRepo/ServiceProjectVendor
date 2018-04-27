@@ -1,9 +1,8 @@
 package bootcamp
 
-import bootcamp.model.inventory.Inventory
 import bootcamp.model.inventory.InventoryItem
 import bootcamp.model.products.Product
-import bootcamp.service.ProductService
+
 import spock.lang.Specification
 
 

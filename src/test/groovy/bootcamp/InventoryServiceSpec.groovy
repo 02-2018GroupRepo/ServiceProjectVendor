@@ -1,7 +1,7 @@
 package bootcamp
 
 import bootcamp.model.products.Product
-import bootcamp.service.InventoryService
+
 import spock.lang.Specification
 
 

@@ -8,7 +8,7 @@ public class Invoice {
 	private Product product;
 	private int count;
 
-	public Invoice(Product invoicedProduct, int i) {}
+	public Invoice() {}
 
 	public Invoice(int invoiceId, Product product, Integer count) {
 		this.invoiceId = invoiceId;
@@ -16,8 +16,12 @@ public class Invoice {
 		this.count = count;
 	}
 
-	public Invoice() {
+	public int getInvoiceId() {
+		return invoiceId;
+	}
 
+	public void setInvoiceId(int invoiceId) {
+		this.invoiceId = invoiceId;
 	}
 
 	public Product getProduct() {
@@ -33,11 +37,5 @@ public class Invoice {
 		this.count = count;
 	}
 
-	public int getInvoiceId() {
-		return invoiceId;
-	}
 
-	public void setInvoiceId(int invoiceId) {
-		this.invoiceId = invoiceId;
-	}
 }

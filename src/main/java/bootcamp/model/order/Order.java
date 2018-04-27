@@ -1,12 +1,14 @@
 package bootcamp.model.order;
 
 public class Order {
-   private int id;
-   private int number_available;
+    private int id;
+    private int quantity;
 
+    public Order() {}
 
-    public Order(){
-
+    public Order(int id, int quantity){
+        this.id = id;
+        this.quantity = quantity;
     }
 
     public int getId() {
@@ -17,21 +19,11 @@ public class Order {
         this.id = id;
     }
 
-    public int getNumber_available() {
-        return number_available;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setNumber_available(int number_available) {
-        this.number_available = number_available;
-    }
-
-    public Order(int id, int number_available) {
-        this.id = id;
-        this.number_available = number_available;
-    }
-
-
-    public Order(int id) {
-        this.id = id;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

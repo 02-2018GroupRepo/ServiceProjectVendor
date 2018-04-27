@@ -1,25 +1,20 @@
 package bootcamp.model.products;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Product {
 	
 	private int id;
 	private String name;
 	private String description;
-	private double wholesale_price;
-	private double retail_price;
+	private BigDecimal wholesale_price;
+	private BigDecimal retail_price;
 	
     
 	protected final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -46,16 +41,16 @@ public class Product {
 		this.description = description;
 	}
 	
-	public double getWholesale_price() {
+	public BigDecimal getWholesale_price() {
 		return wholesale_price;
 	}
-	public void setWholesale_price(double wholesale_price) {
+	public void setWholesale_price(BigDecimal wholesale_price) {
 		this.wholesale_price = wholesale_price;
 	}
-	public double getRetail_price() {
+	public BigDecimal getRetail_price() {
 		return retail_price;
 	}
-	public void setRetail_price(double retail_price) {
+	public void setRetail_price(BigDecimal retail_price) {
 		this.retail_price = retail_price;
 	}
 	
